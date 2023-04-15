@@ -1,6 +1,11 @@
 import express from "express";
 // import router from "../src/routes/router";
 import morgan from "morgan";
+import { middlewareAuthentication } from "./middleware/auth/auth";
+import router from "./routes/router";
+import { createNewUser } from "./handlers/user";
+import { handleInputErrors } from "./middleware/handleInputErrors";
+import { body, oneOf, validationResult } from "express-validator";
 // import { createNewUser, signin } from "./handlers/user";
 // import { protect } from "./modules/auth";
 
@@ -13,12 +18,17 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
   console.log("Hello from express");
   res.status(200);
-  res.json({ message: "hello" });
+  res.json({ message: "hello lix0 API" });
 });
 
-// app.use("/api", protect, router);
+app.use("/api", middlewareAuthentication, router);
 
-// app.post("/user", createNewUser);
+app.post(
+  "/user",
+  [body("email").exists(), body("name").exists(), body("password").exists()],
+  handleInputErrors,
+  createNewUser
+);
 // app.post("/signin", signin);
 
 app.use((err, req, res, next) => {

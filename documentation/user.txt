@@ -1,0 +1,58 @@
+openapi: 3.0.3
+info:
+  title: Criar Usuário API
+  version: 1.0.0
+  description: API para criar um novo usuário
+servers:
+  - url: /
+paths:
+  /user:
+    post:
+      summary: Criar um novo usuário
+      requestBody:
+        description: Objeto de requisição contendo dados do usuário
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Nome do usuário
+                  maxLength: 100
+                email:
+                  type: string
+                  format: email
+                  description: E-mail do usuário
+                password:
+                  type: string
+                  description: Senha do usuário
+                  minLength: 6
+              required:
+                - name
+                - email
+                - password
+      responses:
+        '201':
+          description: Usuário criado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: Token de autenticação gerado para o usuário
+        '400':
+          description: Requisição inválida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Mensagem de erro informando que o e-mail já está cadastrado ou outro erro de validação
+        '500':
+          description: Erro interno do servidor
