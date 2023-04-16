@@ -10,10 +10,13 @@ import { createUser, signin } from "./handlers/user";
 import { handleInputErrors } from "./middleware/handleInputErrors";
 import { body, oneOf, validationResult } from "express-validator";
 import adminRoute from "./routes/adminRoute";
+import { swagger } from "./swagger";
 // import { createNewUser, signin } from "./handlers/user";
 // import { protect } from "./modules/auth";
 
 const app = express();
+swagger(app);
+
 
 app.use(morgan("dev"));
 app.use(express.json());
