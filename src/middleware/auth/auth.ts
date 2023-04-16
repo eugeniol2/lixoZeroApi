@@ -1,58 +1,55 @@
-import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 
-export const comparePasswords = (password, hash) => {
-  return bcrypt.compare(password, hash);
-};
+export const comparePasswords = async (password, hash) => {
+  return await bcrypt.compare(password, hash)
+}
 
-export const hashPassword = (password) => {
-  return bcrypt.hash(password, 5);
-};
+export const hashPassword = async password => {
+  return await bcrypt.hash(password, 5)
+}
 
-export const createJWT = (user) => {
+export const createJWT = user => {
   const token = jwt.sign(
     { id: user.id, username: user.username },
     process.env.JWT_SECRET
-  );
-  return token;
-};
+  )
+  return token
+}
 
 export const middlewareAuthentication = (req, res, next) => {
-  const bearer = req.headers.authorization;
+  const bearer = req.headers.authorization
 
   if (!bearer) {
-    res.status(401);
-    res.send("Not authorized");
-    return;
+    res.status(401)
+    res.send('Not authorized')
+    return
   }
 
-  const [, token] = bearer.split(" ");
+  const [, token] = bearer.split(' ')
   if (!token) {
-    res.status(401);
-    res.send("Not authorized");
-    return;
+    res.status(401)
+    res.send('Not authorized')
+    return
   }
 
   try {
-    const payload = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = payload;
-    next();
-    return;
+    const payload = jwt.verify(token, process.env.JWT_SECRET)
+    req.user = payload
+    next()
+    return
   } catch (e) {
-    console.error(e);
-    res.status(401);
-    res.send("Not authorized");
-    return;
+    res.status(401)
+    res.send('Not authorized')
   }
-};
+}
 
 export const isAdminMiddleware = (req, res, next) => {
-  const bearer = req.headers.authorization;
-  const [, adminToken] = bearer.split(" ");
-  console.log(adminToken);
+  const bearer = req.headers.authorization
+  const [, adminToken] = bearer.split(' ')
   if (adminToken !== process.env.ADMIN_KEY) {
-    return res.status(401).send("Not authorized");
+    return res.status(401).send('Not authorized')
   }
 
-  res.status(200).send("welcome admin");
-};
+  res.status(200).send('welcome admin')
+}

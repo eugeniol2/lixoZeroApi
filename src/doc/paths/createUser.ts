@@ -1,94 +1,94 @@
 export default {
-  "/user": {
+  '/user': {
     post: {
-      summary: "Cria um novo usuário",
-      description: "Cria um novo usuário com as informações fornecidas",
+      summary: 'Cria um novo usuário',
+      description: 'Cria um novo usuário com as informações fornecidas',
       parameters: [
         {
-          in: "body",
-          name: "body",
-          description: "Objeto com as informações do usuário a ser criado",
+          in: 'body',
+          name: 'body',
+          description: 'Objeto com as informações do usuário a ser criado',
           required: true,
           schema: {
-            type: "object",
+            type: 'object',
             properties: {
               name: {
-                type: "string",
+                type: 'string'
               },
               email: {
-                type: "string",
+                type: 'string'
               },
               password: {
-                type: "string",
-              },
-            },
-          },
-        },
+                type: 'string'
+              }
+            }
+          }
+        }
       ],
       responses: {
-        "200": {
-          description: "Usuário criado com sucesso",
+        '200': {
+          description: 'Usuário criado com sucesso',
           schema: {
-            type: "object",
+            type: 'object',
             properties: {
               token: {
-                type: "string",
-                description: "Token JWT para autenticação do usuário",
-              },
-            },
-          },
+                type: 'string',
+                description: 'Token JWT para autenticação do usuário'
+              }
+            }
+          }
         },
-        "400": {
-          description: "Erro na validação dos campos",
+        '400': {
+          description: 'Erro na validação dos campos',
           schema: {
-            type: "object",
+            type: 'object',
             properties: {
               errors: {
-                type: "array",
+                type: 'array',
                 items: {
-                  type: "object",
+                  type: 'object',
                   properties: {
                     msg: {
-                      type: "string",
+                      type: 'string'
                     },
                     param: {
-                      type: "string",
+                      type: 'string'
                     },
                     location: {
-                      type: "string",
-                    },
-                  },
-                },
-              },
-            },
-          },
+                      type: 'string'
+                    }
+                  }
+                }
+              }
+            }
+          }
         },
-        "500": {
-          description: "Erro na validação dos campos",
+        '500': {
+          description: 'Erro na validação dos campos',
           schema: {
-            type: "object",
+            type: 'object',
             properties: {
               errors: {
-                type: "array",
+                type: 'array',
                 items: {
-                  type: "object",
+                  type: 'object',
                   properties: {
                     msg: {
-                      type: "string",
+                      type: 'string'
                     },
                     param: {
-                      type: "string",
+                      type: 'string'
                     },
                     location: {
-                      type: "string",
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-  },
-};
+                      type: 'string'
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

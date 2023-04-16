@@ -1,4 +1,4 @@
-import prisma from "../../database";
+import prisma from 'src/database'
 
 export const createMission = async (req, res) => {
   const mission = await prisma.mission.create({

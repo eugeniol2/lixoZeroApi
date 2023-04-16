@@ -1,33 +1,27 @@
-import createUser from './paths/createUser'
+import createUser from 'src/doc/paths/createUser'
 
 export const swaggerDefinition = {
-  swagger: "2.0",
+  swagger: '2.0',
   info: {
-    "version": "1.0.0",
-    "title": "API de Usuários",
-    "description": "API para criação de usuários"
+    version: '1.0.0',
+    title: 'API de Usuários',
+    description: 'API para criação de usuários'
   },
-  basePath: "/",
-  schemes: [
-    "http"
-  ],
-  produces: [
-    "application/json"
-  ],
-  consumes: [
-    "application/json"
-  ],
+  basePath: '/',
+  schemes: ['http'],
+  produces: ['application/json'],
+  consumes: ['application/json'],
   securityDefinitions: {
     Bearer: {
-      type: "apiKey",
-      name: "Authorization",
-      in: "header",
-    },
+      type: 'apiKey',
+      name: 'Authorization',
+      in: 'header'
+    }
   },
   security: [
     {
-      Bearer: [],
-    },
+      Bearer: []
+    }
   ],
   paths: {
     ...createUser
