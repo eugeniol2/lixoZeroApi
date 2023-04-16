@@ -4,5 +4,5 @@ import app from "./app";
 // import config from "./config";
 
 app.listen(process.env.PORT, () => {
-  console.log(`Hello from http//localhost:3001`);
+  console.log(`Hello from http//localhost:${process.env.PORT}`);
 });

@@ -17,7 +17,6 @@ import { swagger } from "./swagger";
 const app = express();
 swagger(app);
 
-
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

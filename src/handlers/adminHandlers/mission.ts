@@ -5,18 +5,25 @@ export const createMission = async (req, res) => {
     data: {
       reward: req.body.reward,
       title: req.body.title,
-      openAt: req.body.openAt,
-      closedAt: req.body.closedAt,
+      openAt: req.body?.openAt || null,
+      closedAt: req.body?.closedAt || null,
       missionType: req.body.missionType,
       description: req.body.description,
       MissionDetails: {
         create: {
-          contact: req.body.contact,
-          website: req.body.website,
+          contact: req.body?.MissionDetails?.contact || null,
+          website: req.body?.MissionDetails?.website || null,
+          delivery: req.body?.MissionDetails?.delivery || false,
         },
       },
       MissionAdress: {
-        create: {},
+        create: {
+          street: req.body?.MissionAdress?.street || null,
+          city: req.body?.MissionAdress?.city || null,
+          uf: req.body?.MissionAdress?.uf || null,
+          neighborhood: req.body?.MissionAdress?.neighborhood || null,
+          cep: req.body?.MissionAdress?.cep || null,
+        },
       },
     },
     include: {
@@ -28,6 +35,11 @@ export const createMission = async (req, res) => {
   res.json({ data: mission });
 };
 
+export const getMission = async (req, res) => {
+  const mission = await prisma.mission.findMany({
+    where: {},
+  });
+};
 // export const createProduct = async (req, res) => {
 //   const product = await prisma.product.create({
 //     data: {
