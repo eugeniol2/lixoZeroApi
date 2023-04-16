@@ -1,4 +1,4 @@
-import prisma from "../../database";
+import prisma from 'src/database'
 
 export const createMission = async (req, res) => {
   const mission = await prisma.mission.create({
@@ -12,21 +12,21 @@ export const createMission = async (req, res) => {
       MissionDetails: {
         create: {
           contact: req.body.contact,
-          website: req.body.website,
-        },
+          website: req.body.website
+        }
       },
       MissionAdress: {
-        create: {},
-      },
+        create: {}
+      }
     },
     include: {
       MissionDetails: true,
-      MissionAdress: true,
-    },
-  });
+      MissionAdress: true
+    }
+  })
 
-  res.json({ data: mission });
-};
+  res.json({ data: mission })
+}
 
 // export const createProduct = async (req, res) => {
 //   const product = await prisma.product.create({

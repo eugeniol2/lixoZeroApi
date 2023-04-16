@@ -1,19 +1,19 @@
-import prisma from "../database";
+import prisma from 'src/database'
 import {
   comparePasswords,
   createJWT,
-  hashPassword,
-} from "../middleware/auth/auth";
+  hashPassword
+} from 'src/middleware/auth/auth'
 
 export const createUser = async (req, res) => {
   const alreadyRegistered = await prisma.user.findUnique({
     where: {
-      email: req.body.email,
-    },
-  });
+      email: req.body.email
+    }
+  })
 
   if (alreadyRegistered) {
-    return res.status(400).json({ error: "Email já cadastrado" });
+    return res.status(400).json({ error: 'Email já cadastrado' })
   }
   const user = await prisma.user.create({
     data: {
@@ -21,41 +21,41 @@ export const createUser = async (req, res) => {
       email: req.body.email,
       password: await hashPassword(req.body.password),
       UserQuizScore: {
-        create: {},
+        create: {}
       },
       UserAdress: {
-        create: {},
-      },
+        create: {}
+      }
     },
     include: {
       UserQuizScore: true,
-      UserAdress: true,
-    },
-  });
+      UserAdress: true
+    }
+  })
 
-  const token = createJWT(user);
-  res.json({ token });
-};
+  const token = createJWT(user)
+  res.json({ token })
+}
 
 export const signin = async (req, res) => {
   const user = await prisma.user.findUnique({
     where: {
-      email: req.body.email,
-    },
-  });
+      email: req.body.email
+    }
+  })
 
   if (!user) {
-    return res.status(400), res.json({ error: "Password ou email inválido" });
+    return res.status(400).json({ error: 'Password ou email inválido' })
   }
 
-  const isValid = await comparePasswords(req.body.password, user.password);
+  const isValid = await comparePasswords(req.body.password, user.password)
 
   if (!isValid) {
-    res.status(401);
-    res.json({ error: "Password ou email inválido" });
-    return;
+    res.status(401)
+    res.json({ error: 'Password ou email inválido' })
+    return
   }
 
-  const token = createJWT(user);
-  res.json({ token });
-};
+  const token = createJWT(user)
+  res.json({ token })
+}

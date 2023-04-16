@@ -1,8 +1,9 @@
-import { Router } from "express";
-import { createMission } from "../handlers/adminHandlers/mission";
+import { Router } from 'express'
 
-const router = Router();
+import { createMission } from 'src/handlers/adminHandlers/mission'
 
-export default router;
+const router = Router()
 
-router.post("/mission", createMission);
+export default router
+
+router.post('/mission', createMission)
