@@ -10,16 +10,16 @@ datasource db {
 // User 
 
 model User {
-  id            String          @id @default(uuid())
-  createdAt     DateTime        @default(now())
+  id            String         @id @default(uuid())
+  createdAt     DateTime       @default(now())
   image         String?
   name          String
-  email         String          @unique
+  email         String         @unique
   password      String
   birthDate     String?
-  totalPoints   Int             @default(0)
-  UserAdress    UserAdress[]
-  UserQuizScore UserQuizScore[]
+  totalPoints   Int            @default(0)
+  UserAdress    UserAdress?
+  UserQuizScore UserQuizScore?
 }
 
 model UserAdress {
@@ -28,10 +28,8 @@ model UserAdress {
   city         String?
   neighborhood String?
   cep          String?
-  userAdressId String
-  belongsTo    User    @relation(fields: [userAdressId], references: [id])
-
-  @@unique([id, userAdressId])
+  user         User    @relation(fields: [userId], references: [id])
+  userId       String  @unique
 }
 
 model UserQuizScore {
@@ -44,8 +42,6 @@ model UserQuizScore {
   sustainableCountry  Boolean @default(false)
   sustainableShopping Boolean @default(false)
   turism              Boolean @default(false)
-  userAdressId        String
-  belongsTo           User    @relation(fields: [userAdressId], references: [id])
-
-  @@unique([id, userAdressId])
+  user                User    @relation(fields: [userId], references: [id])
+  userId              String  @unique
 }

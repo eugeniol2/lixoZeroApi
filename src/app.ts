@@ -3,7 +3,7 @@ import express from "express";
 import morgan from "morgan";
 import { middlewareAuthentication } from "./middleware/auth/auth";
 import router from "./routes/router";
-import { createNewUser } from "./handlers/user";
+import { createUser, signin } from "./handlers/user";
 import { handleInputErrors } from "./middleware/handleInputErrors";
 import { body, oneOf, validationResult } from "express-validator";
 // import { createNewUser, signin } from "./handlers/user";
@@ -27,9 +27,14 @@ app.post(
   "/user",
   [body("email").exists(), body("name").exists(), body("password").exists()],
   handleInputErrors,
-  createNewUser
+  createUser
 );
-// app.post("/signin", signin);
+app.post(
+  "/signin",
+  [body("email").exists(), body("password").exists()],
+  handleInputErrors,
+  signin
+);
 
 app.use((err, req, res, next) => {
   console.log(err);
