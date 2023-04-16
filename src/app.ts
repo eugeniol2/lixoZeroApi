@@ -1,11 +1,15 @@
 import express from "express";
 // import router from "../src/routes/router";
 import morgan from "morgan";
-import { middlewareAuthentication } from "./middleware/auth/auth";
+import {
+  isAdminMiddleware,
+  middlewareAuthentication,
+} from "./middleware/auth/auth";
 import router from "./routes/router";
 import { createUser, signin } from "./handlers/user";
 import { handleInputErrors } from "./middleware/handleInputErrors";
 import { body, oneOf, validationResult } from "express-validator";
+import adminRoute from "./routes/adminRoute";
 // import { createNewUser, signin } from "./handlers/user";
 // import { protect } from "./modules/auth";
 
@@ -22,6 +26,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api", middlewareAuthentication, router);
+app.use("/admin", adminRoute);
 
 app.post(
   "/user",

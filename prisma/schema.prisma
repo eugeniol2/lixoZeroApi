@@ -28,7 +28,7 @@ model UserAdress {
   city         String?
   neighborhood String?
   cep          String?
-  user         User    @relation(fields: [userId], references: [id])
+  user         User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       String  @unique
 }
 
@@ -42,6 +42,48 @@ model UserQuizScore {
   sustainableCountry  Boolean @default(false)
   sustainableShopping Boolean @default(false)
   turism              Boolean @default(false)
-  user                User    @relation(fields: [userId], references: [id])
+  user                User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId              String  @unique
+}
+
+// mission
+
+model MissionAdress {
+  id           String  @id @default(uuid())
+  street       String?
+  city         String?
+  uf           String?
+  neighborhood String?
+  cep          String?
+  mission      Mission @relation(fields: [missionId], references: [id], onDelete: Cascade)
+  missionId    String  @unique
+}
+
+model MissionDetails {
+  id        String  @id @default(uuid())
+  contact   String?
+  website   String?
+  delivery  Boolean @default(false)
+  mission   Mission @relation(fields: [missionId], references: [id], onDelete: Cascade)
+  missionId String  @unique
+}
+
+enum MISSION_TYPE {
+  DESCARTE
+  TRATAMENTO
+  QUIZ
+}
+
+model Mission {
+  id          String       @id @default(uuid())
+  reward      Int
+  title       String
+  openAt      DateTime?
+  closedAt    DateTime?
+  missionType MISSION_TYPE
+  description String
+  inProgress  Boolean      @default(false)
+
+  MissionDetails MissionDetails?
+  MissionAdress  MissionAdress?
 }

@@ -45,3 +45,14 @@ export const middlewareAuthentication = (req, res, next) => {
     return;
   }
 };
+
+export const isAdminMiddleware = (req, res, next) => {
+  const bearer = req.headers.authorization;
+  const [, adminToken] = bearer.split(" ");
+  console.log(adminToken);
+  if (adminToken !== process.env.ADMIN_KEY) {
+    return res.status(401).send("Not authorized");
+  }
+
+  res.status(200).send("welcome admin");
+};
