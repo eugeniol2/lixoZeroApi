@@ -1,9 +1,9 @@
-import prisma from 'src/database'
+import prisma from '../database'
 import {
   comparePasswords,
   createJWT,
   hashPassword
-} from 'src/middleware/auth/auth'
+} from '../middleware/auth/auth'
 
 export const createUser = async (req, res) => {
   const alreadyRegistered = await prisma.user.findUnique({
@@ -25,11 +25,13 @@ export const createUser = async (req, res) => {
       },
       UserAdress: {
         create: {}
-      }
+      },
+      Missions: {}
     },
     include: {
       UserQuizScore: true,
-      UserAdress: true
+      UserAdress: true,
+      Missions: true
     }
   })
 

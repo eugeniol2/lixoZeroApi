@@ -6,12 +6,12 @@ import express, {
 import { body } from 'express-validator'
 import morgan from 'morgan'
 
-import { createUser, signin } from 'src/handlers/user'
-import { middlewareAuthentication } from 'src/middleware/auth/auth'
-import { handleInputErrors } from 'src/middleware/handleInputErrors'
-import adminRoute from 'src/routes/adminRoute'
-import router from 'src/routes/router'
-import { swagger } from 'src/swagger'
+import { createUser, signin } from './handlers/user'
+import { middlewareAuthentication } from './middleware/auth/auth'
+import { handleInputErrors } from './middleware/handleInputErrors'
+import adminRoute from './routes/adminRoute'
+import router from './routes/router'
+import { swagger } from './swagger'
 
 const app = express()
 swagger(app)

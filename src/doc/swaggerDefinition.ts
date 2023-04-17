@@ -1,4 +1,4 @@
-import createUser from 'src/doc/paths/createUser'
+import { createUser } from '../handlers/user'
 
 export const swaggerDefinition = {
   swagger: '2.0',

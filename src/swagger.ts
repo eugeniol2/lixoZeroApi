@@ -2,7 +2,7 @@ import { type Application } from 'express'
 import swaggerJSDoc from 'swagger-jsdoc'
 import swaggerUi from 'swagger-ui-express'
 
-import { swaggerDefinition } from 'src/doc/swaggerDefinition'
+import { swaggerDefinition } from './doc/swaggerDefinition'
 
 const options = {
   swaggerDefinition,

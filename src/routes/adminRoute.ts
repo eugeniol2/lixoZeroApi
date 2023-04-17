@@ -1,9 +1,23 @@
 import { Router } from 'express'
 
-import { createMission } from 'src/handlers/adminHandlers/mission'
+import {
+  createMission,
+  deleteOneMission,
+  getAllMissions,
+  getOneMission,
+  updateMission
+} from '../handlers/adminHandlers/mission'
 
 const router = Router()
 
 export default router
 
-router.post('/mission', createMission)
+router.post('/mission/create', createMission)
+
+router.get('/mission/', getAllMissions)
+
+router.get('/mission/getone/:id', getOneMission)
+
+router.put('/mission/update/:id', updateMission)
+
+router.delete('/mission/delete/:id', deleteOneMission)

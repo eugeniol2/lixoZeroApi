@@ -20,6 +20,7 @@ model User {
   totalPoints   Int            @default(0)
   UserAdress    UserAdress?
   UserQuizScore UserQuizScore?
+  Missions      Mission[]
 }
 
 model UserAdress {
@@ -86,4 +87,6 @@ model Mission {
 
   MissionDetails MissionDetails?
   MissionAdress  MissionAdress?
+  User           User?           @relation(fields: [userId], references: [id])
+  userId         String?
 }
