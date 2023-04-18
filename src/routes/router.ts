@@ -8,10 +8,14 @@ import {
   getAllUserAddedMissions,
   requestToCompleteMission
 } from '../handlers/userMissionHandlers'
+import { getUser } from '../handlers/user'
 
 const router = Router()
 
 export default router
+
+// user
+router.get('/user', getUser)
 
 // mission
 router.post('/user/mission/add/:id', addUserMission)

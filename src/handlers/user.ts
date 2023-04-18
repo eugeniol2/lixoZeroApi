@@ -39,6 +39,16 @@ export const createUser = async (req, res) => {
   res.json({ token })
 }
 
+export const getUser = async (req, res) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: req.user.id,
+      email: req.user.email
+    }
+  })
+  res.json({ data: user })
+}
+
 export const signin = async (req, res) => {
   const user = await prisma.user.findUnique({
     where: {
