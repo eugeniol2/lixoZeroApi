@@ -80,6 +80,18 @@ export const requestToCompleteMission = async (req, res) => {
       })
     }
 
+    const missionAlreadyDone = await prisma.user.findFirst({
+      where: {
+        alreadyDoneMissions: {
+          has: req.params.id
+        }
+      }
+    })
+
+    if (missionAlreadyDone) {
+      return res.status(404).json({ error: 'This mission was already done' })
+    }
+
     const mission = await prisma.mission.findUnique({
       where: {
         id: req.params.id
@@ -87,6 +99,7 @@ export const requestToCompleteMission = async (req, res) => {
     })
 
     const rewardValue = mission.reward
+
     const updatedUser = await prisma.user.update({
       where: {
         id: req.user.id
@@ -97,6 +110,9 @@ export const requestToCompleteMission = async (req, res) => {
         },
         Missions: {
           disconnect: { id: req.params.id }
+        },
+        alreadyDoneMissions: {
+          push: mission.id
         }
       },
       include: {
@@ -108,6 +124,44 @@ export const requestToCompleteMission = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
-  // credit on the user
-  // delete mission from the user
+}
+
+export const getAllPossibleMisssions = async (req, res) => {
+  const missionIds = await prisma.user.findUnique({
+    where: {
+      id: req.user.id
+    },
+    select: {
+      alreadyDoneMissions: true
+    }
+  })
+
+  const mission = await prisma.mission.findMany({
+    where: {
+      NOT: {
+        id: {
+          in: missionIds.alreadyDoneMissions
+        }
+      }
+    },
+    include: {
+      MissionAdress: true,
+      MissionDetails: true
+    }
+  })
+
+  res.json({ data: mission })
+}
+
+export const getAllUserAddedMissions = async (req, res) => {
+  const userMissions = await prisma.user.findMany({
+    where: {
+      id: req.user.id
+    },
+    select: {
+      Missions: true
+    }
+  })
+
+  res.json({ data: userMissions })
 }

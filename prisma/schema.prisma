@@ -10,18 +10,19 @@ datasource db {
 // User 
 
 model User {
-  id            String         @id @default(uuid())
-  createdAt     DateTime       @default(now())
-  image         String?
-  name          String
-  email         String         @unique
-  password      String
-  birthDate     String?
-  totalPoints   Int            @default(0)
-  UserAdress    UserAdress?
-  UserQuizScore UserQuizScore?
-  Missions      Mission[]
-  Coupon        Coupon[]
+  id                  String         @id @default(uuid())
+  createdAt           DateTime       @default(now())
+  image               String?
+  name                String
+  email               String         @unique
+  password            String
+  birthDate           String?
+  totalPoints         Int            @default(0)
+  alreadyDoneMissions String[]       @default([])
+  UserAdress          UserAdress?
+  UserQuizScore       UserQuizScore?
+  Missions            Mission[]
+  Coupon              Coupon[]
 }
 
 model UserAdress {
@@ -88,8 +89,7 @@ model Mission {
 
   MissionDetails MissionDetails?
   MissionAdress  MissionAdress?
-  User           User?           @relation(fields: [userId], references: [id])
-  userId         String?
+  User           User[]
 }
 
 // couponStore
