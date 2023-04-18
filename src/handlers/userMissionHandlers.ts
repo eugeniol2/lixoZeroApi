@@ -80,15 +80,16 @@ export const requestToCompleteMission = async (req, res) => {
       })
     }
 
-    const missionAlreadyDone = await prisma.user.findFirst({
+    const missionsAlreadyDoneByUser = await prisma.user.findUnique({
       where: {
-        alreadyDoneMissions: {
-          has: req.params.id
-        }
+        id: req.user.id
+      },
+      select: {
+        alreadyDoneMissions: true
       }
     })
 
-    if (missionAlreadyDone) {
+    if (missionsAlreadyDoneByUser.alreadyDoneMissions.includes(req.params.id)) {
       return res.status(404).json({ error: 'This mission was already done' })
     }
 
