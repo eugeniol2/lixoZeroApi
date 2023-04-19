@@ -6,7 +6,7 @@ import { swaggerDefinition } from './doc/swaggerDefinition'
 
 const options = {
   swaggerDefinition,
-  apis: ['./routes/*.js']
+  apis: ['./routes/*.ts']
 }
 
 const swaggerSpec = swaggerJSDoc(options)
